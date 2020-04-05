@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+service EC2{
+    rpc Build(BuildRequest) returns(BuildResponse);
+    rpc Plan(PlanRequest) returns (PlanResponse);
+    rpc Apply(ApplyRequest) returns (ApplyResponse);
+}
+
+message BuildRequest{
+    string source = 1;
+    string version = 2;
+    string name  =3;
+    int32 instance_count =4;
+    string ami = 5;
+    string instance_type = 6;
+    string key_name = 7;
+    bool monitoring = 8;
+    repeated string vpc_security_group_ids = 9;
+    string subnet_id = 10;
+    map<string, string> tag = 11;
+
+}
+
+message BuildResponse{
+    string build_id = 1;
+}
+
+message PlanRequest{
+    string build_id = 1;
+}
+
+message PlanResponse{
+    string output = 1;
+}
+
+message ApplyRequest{
+    string build_id =1;
+}
+
+message ApplyResponse{
+    string output =1;
+}
